@@ -1,0 +1,195 @@
+:root {
+    --primary: #00ff88;
+    --secondary: #00b4d8;
+}
+
+body {
+    background: radial-gradient(circle at center, #0a0f1d 0%, #050816 100%);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.light-mode {
+  --primary: #2563eb;
+  --secondary: #4f46e5;
+  background: #f0f4ff;
+  color: #1a1a1a;
+}
+
+.light-mode .glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.8s ease forwards;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+
+nav {
+    z-index: 1000;
+}
+
+section {
+    scroll-margin-top: 100px;
+    min-height: 100vh;
+    padding-top: 120px;
+}
+
+#home {
+    padding-top: 200px;
+}/* Hover Effects */
+.glass-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+@keyframes floatHover {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  animation: floatHover 1.5s ease-in-out infinite;
+}
+
+/* Click Animation */
+.scale-95 {
+  transform: scale(0.95);
+}/* Profile Image Animation */
+.profile-img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Special Thanks Icons */
+.special-thanks li {
+  transition: all 0.3s ease;
+}
+
+.special-thanks li:hover {
+  transform: translateX(10px);
+}
+
+.special-thanks li:hover .mdi {
+  color: var(--primary);
+}
+:root {
+  --primary: #00ff88;
+  --secondary: #00b4d8;
+  --background: radial-gradient(circle at center, #0a0f1d 0%, #050816 100%);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-color: #ffffff;
+}
+
+[data-theme="orange"] {
+  --primary: #ff6b35;
+  --secondary: #ff9f1c;
+  --background: radial-gradient(circle at center, #2d0a00 0%, #1a0500 100%);
+  --card-bg: rgba(255, 107, 53, 0.1);
+  --card-border: rgba(255, 107, 53, 0.3);
+  --text-color: #fff5f2;
+}
+
+[data-theme="gray"] {
+  --primary: #4a5568;
+  --secondary: #718096;
+  --background: linear-gradient(145deg, #ffffff 0%, #f7fafc 100%);
+  --card-bg: rgba(113, 128, 150, 0.1);
+  --card-border: rgba(113, 128, 150, 0.2);
+  --text-color: #1a202c;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Rest of your existing styles remain the same */

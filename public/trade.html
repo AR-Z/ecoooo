@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Ecomons">
+  <meta property="og:site_name" content="Ecomons - Home">
+  <meta property="og:url" content="https://6dccbdd8-0d4c-43ce-ae51-297d09db04eb-00-3coayusznpro6.spock.replit.dev/trade.html">
+  <meta property="og:description" content="
+    A community-driven source of reliable values, data, and updates for ECSR limited items and helpful trading information">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&">
+  <title>Trade Calculator - ecomons</title>
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&" />
+  <!-- Material Design Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Define CSS variables for the trade boxes */
+    :root {
+      --trade-bg: rgba(0,0,0,0.7);
+      --trade-text: #ffffff;
+      --trade-border: 1px solid rgba(255,255,255,0.2);
+    }
+    body {
+      background-color: #0a0f1d;
+      color: #ffffff;
+    }
+    /* Navbar styling (same as index.html) */
+    .nav-link {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.5rem;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover {
+      color: #00ff88;
+    }
+    .search-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+    /* Trade Calculator Layout */
+    .trade-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .trade-side {
+      flex: 1;
+      min-width: 250px;
+      background: var(--trade-bg);
+      color: var(--trade-text);
+      padding: 0.3rem;  /* Reduced padding for smaller height */
+      border-radius: 0.5rem;
+      border: var(--trade-border);
+    }
+    .trade-side h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    /* Selected item styling in Offer/Request lists */
+    .selected-item {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .selected-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border-radius: 0.25rem;
+      margin-right: 0.5rem;
+    }
+    .selected-item span {
+      flex: 1;
+      font-size: 1rem;
+    }
+    .selected-item button {
+      background: transparent;
+      border: none;
+      color: #ff4d4d;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    /* Robux Box styling */
+    .robux-box {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #fff;
+    }
+    /* Available Items Section */
+    .available-item {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .available-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      border-radius: 0.5rem;
+    }
+    .available-item button {
+      margin-top: 0.5rem;
+      background: #00ff88;
+      color: #000;
+      padding: 0.25rem 0.5rem;
+      border: none;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    /* Jumping animation for header text */
+    .jumping {
+      animation: jump 1s ease-in-out infinite;
+    }
+    @keyframes jump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="text-gray-100">
+  <!-- Navbar (same as index.html) -->
+  <nav class="glass-card fixed w-full top-0 z-50 py-4 px-6">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <img src="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&" alt="Logo" class="h-10" />
+      <div class="flex items-center space-x-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="trade.html" class="nav-link">Trade Calculator</a>
+        <a href="#items" class="nav-link">Items</a>
+        <a href="#games" class="nav-link">Games</a>
+        <a href="#credits" class="nav-link">Credits</a>
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-white/10">
+          <span class="mdi mdi-palette text-xl"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Trade Calculator Content -->
+  <header class="pt-24 pb-6 text-center">
+    <h1 class="text-4xl font-bold gradient-text jumping">Trade Calculator</h1>
+  </header>
+  <main class="max-w-7xl mx-auto px-4 pb-8">
+    <!-- Trade Calculator Section: Offer and Request on top -->
+    <section class="trade-container">
+      <!-- Offer Side -->
+      <div class="trade-side">
+        <h2>Offer</h2>
+        <div id="offerList"></div>
+        <div class="mt-2">
+          <label for="offerRobux" class="block text-sm mb-1">Robux:</label>
+          <input type="number" id="offerRobux" class="search-input w-full" value="0">
+        </div>
+      </div>
+      <!-- Request Side -->
+      <div class="trade-side">
+        <h2>Request</h2>
+        <div id="requestList"></div>
+        <div class="mt-2">
+          <label for="requestRobux" class="block text-sm mb-1">Robux:</label>
+          <input type="number" id="requestRobux" class="search-input w-full" value="0">
+        </div>
+      </div>
+    </section>
+
+    <!-- Robux Box -->
+    <div class="robux-box" id="robuxBox">
+      Offer Total: 0 | Request Total: 0 | Net: 0
+    </div>
+
+    <!-- Clear Selections Button -->
+    <div class="mt-4 text-center">
+      <button id="clearSelection" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700 hidden">Clear Selection</button>
+    </div>
+
+    <!-- Available Items List (below the trade calculator) -->
+    <section class="mt-8">
+      <h2 class="text-2xl font-bold mb-4 text-center">Available Items</h2>
+      <div id="availableItems" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+  </main>
+
+  <!-- Dark Mode Toggle Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = themeToggle.querySelector('.mdi');
+
+      function applyTheme(theme) {
+        if (theme === 'light') {
+          document.documentElement.classList.add('light-mode');
+          themeIcon.className = 'mdi mdi-weather-sunny text-xl';
+          document.documentElement.style.setProperty('--primary', '#000000');
+          document.documentElement.style.setProperty('--secondary', '#808080');
+          // For light mode, set trade box variables to light colors
+          document.documentElement.style.setProperty('--trade-bg', 'rgba(255,255,255,0.8)');
+          document.documentElement.style.setProperty('--trade-text', '#000000');
+          document.documentElement.style.setProperty('--trade-border', '1px solid rgba(0,0,0,0.2)');
+          document.body.style.backgroundColor = '#f0f4ff';
+          document.body.style.color = '#000000';
+        } else {
+          document.documentElement.classList.remove('light-mode');
+          themeIcon.className = 'mdi mdi-weather-night text-xl';
+          document.documentElement.style.setProperty('--primary', '#808080');
+          document.documentElement.style.setProperty('--secondary', '#000000');
+          // For dark mode, use a lighter dark background with an outline
+          document.documentElement.style.setProperty('--trade-bg', 'rgba(50,50,50,0.8)');
+          document.documentElement.style.setProperty('--trade-text', '#ffffff');
+          document.documentElement.style.setProperty('--trade-border', '1px solid rgba(255,255,255,0.2)');
+          document.body.style.backgroundColor = '#0a0f1d';
+          document.body.style.color = '#ffffff';
+        }
+        localStorage.setItem('theme', theme);
+      }
+      
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
+      
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+      });
+    });
+  </script>
+
+  <script src="trade.js"></script>
+</body>
+</html>
