@@ -1,6 +1,5 @@
 name = "ecomonss-api"
 main = "index.js"  # This points to your entry file
-type = "javascript"
 
 account_id = "fb63aef7a33b533b6532359509528b07"
 workers_dev = true
