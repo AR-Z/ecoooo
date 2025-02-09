@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Ecomons">
+  <meta property="og:site_name" content="Ecomons - Home">
+  <meta property="og:url" content="https://6dccbdd8-0d4c-43ce-ae51-297d09db04eb-00-3coayusznpro6.spock.replit.dev/index.html">
+  <meta property="og:description" content="
+    A community-driven source of reliable values, data, and updates for ECSR limited items and helpful trading information">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&">
+  <title>ecomons</title>
+  <!-- Favicon using the navbar logo image -->
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&" />
+  <!-- Material Design Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+      /* For WebKit-based browsers (Chrome, Safari, Edge) */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; /* No background */
+        border-radius: 20px;     /* Increased radius */
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #808080, #000000); /* Gray to Black gradient */
+        border-radius: 20px;     /* Increased radius */
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(45deg, #707070, #0d0d0d);
+      }
+      /* For Firefox (using solid colors) */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #000000 transparent;
+      }
+
+    /* Spin hover effect for the banner image only */
+    .spin-hover {
+      transition: transform 0.3s ease;
+    }
+    .spin-hover:hover {
+      transform: rotate(360deg);
+    }
+    /* In light mode, override .text-gray-400 to a darker shade */
+    .light-mode .text-gray-400 {
+      color: #4B5563 !important;
+    }
+    /* Tooltip styles for the custom timestamp box */
+    .tooltip {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .tooltip.hidden {
+      display: none;
+    }
+    /* Chart container covers the entire card and is hidden by default */
+    .chart-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.95);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chart-container.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body class="text-gray-100">
+  <!-- Navbar (common to all pages) -->
+  <nav class="glass-card fixed w-full top-0 z-50 py-4 px-6">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <img src="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&" alt="Logo" class="h-10" />
+      <div class="flex items-center space-x-6">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="trade.html" class="nav-link">Trade Calculator</a>
+        <a href="#items" class="nav-link">Items</a>
+        <a href="#games" class="nav-link">Games</a>
+        <a href="#credits" class="nav-link">Credits</a>
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-white/10">
+          <span class="mdi mdi-palette text-xl"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-20">
+    <!-- Home Section -->
+    <section id="home" class="min-h-screen pt-32 pb-16 px-6 max-w-7xl mx-auto flex items-center">
+      <div class="text-center w-full">
+        <img src="https://cdn.discordapp.com/attachments/892095162732380180/1337844113143234580/jmemoe.png?ex=67a8ebec&is=67a79a6c&hm=2a97f98d1926f4b3ff4195bbce2a63127a72692f65e943f817d6fff192ecdca9&" 
+             alt="Banner Image" 
+             class="mx-auto animate-fade-up mb-6 w-1/2 max-w-md spin-hover" />
+        <div class="glass-card p-6 inline-block animate-fade-up delay-200">
+          <div class="flex gap-8">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary flex items-center justify-center">
+                <span class="mdi mdi-package-variant-closed mr-2"></span>
+                <span id="trackedCount">0</span>
+              </div>
+              <div class="text-gray-400">Items Tracked</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-secondary flex items-center justify-center">
+                <span class="mdi mdi-account-group mr-2"></span>
+                <span id="tradersCount">0</span>
+              </div>
+              <div class="text-gray-400">Active Traders</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Items Section -->
+    <section id="items" class="py-16 px-6 max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 gradient-text flex items-center animate-fade-up">
+        <span class="mdi mdi-trending-up mr-3 animate-float"></span>
+        Limiteds
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="itemsContainer"></div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="py-16 px-6 max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 gradient-text flex items-center animate-fade-up">
+        <span class="mdi mdi-controller-classic mr-3 animate-float"></span>
+        Popular Games
+      </h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="glass-card p-6">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <span class="mdi mdi-trending-up mr-2 text-primary"></span>
+            Most Popular
+          </h3>
+          <div class="space-y-4" id="popularGames"></div>
+        </div>
+        <div class="glass-card p-6">
+          <h3 class="text-xl font-semibold mb-4 flex items-center">
+            <span class="mdi mdi-heart-outline mr-2 text-secondary"></span>
+            Most Favorited
+          </h3>
+          <div class="space-y-4" id="favoritedGames"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credits Section -->
+    <section id="credits" class="py-16 px-6 max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 gradient-text animate-fade-up">Credits</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="glass-card p-6">
+          <h3 class="text-xl font-semibold mb-4">Development Team</h3>
+          <div class="space-y-4">
+            <div class="flex items-center hover-float">
+              <img src="https://cdn.discordapp.com/avatars/738186577695735828/f168fb0975e9e89070ba929a283b3daf.webp?size=1024&format=webp" alt="aRz" class="w-16 h-16 rounded-full mr-4 border-2 border-[var(--primary)]">
+              <div>
+                <div class="font-medium text-lg">aRz</div>
+                <div class="text-[var(--primary)]">Developer</div>
+              </div>
+            </div>
+            <div class="flex items-center hover-float">
+              <img src="https://cdn.discordapp.com/avatars/1017665742117797928/e7e2532900cecdb462e93fe75781e5ef.webp?size=1024&format=webp" alt="Sow" class="w-16 h-16 rounded-full mr-4 border-2 border-[var(--primary)]">
+              <div>
+                <div class="font-medium text-lg">Sow</div>
+                <div class="text-[var(--primary)]">Site Owner/Operator</div>
+              </div>
+            </div>
+            <div class="flex items-center hover-float">
+              <img src="https://cdn.discordapp.com/avatars/979957679936114698/354cf4bf34ad9ae1aab67e33145f3e68.webp?size=1024&format=webp" alt="wcv" class="w-16 h-16 rounded-full mr-4 border-2 border-[var(--primary)]">
+              <div>
+                <div class="font-medium text-lg">wcv</div>
+                <div class="text-[var(--primary)]">Value Changer</div>
+              </div>
+            </div>
+            <div class="flex items-center hover-float">
+              <img src="https://cdn.discordapp.com/avatars/1059224639462711497/a918b459f387dc9469eb473020c763be.webp?size=1024&format=webp" alt="ace" class="w-16 h-16 rounded-full mr-4 border-2 border-[var(--primary)]">
+              <div>
+                <div class="font-medium text-lg">Ace</div>
+                <div class="text-[var(--primary)]">Value Changer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card p-6">
+          <h3 class="text-xl font-semibold mb-4">Special Thanks</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center hover-float">
+              <span class="mdi mdi-heart text-[var(--primary)] mr-2"></span>
+              The ECSR:R Community
+            </li>
+            <li class="flex items-center hover-float">
+              <span class="mdi mdi-account-group text-[var(--secondary)] mr-2"></span>
+              3000 Gay Femboy furry jew black Users 
+            </li>
+            <li class="flex items-center hover-float">
+              <span class="mdi mdi-github text-gray-300 mr-2"></span>
+              Made with ❤️ by aRz
+            </li>
+            <li class="flex items-center hover-float">
+              <span class="mdi mdi-star text-yellow-400 mr-2"></span>
+              kamil
+            </li>
+            <li class="flex items-center hover-float">
+              <span class="mdi mdi-lightbulb-on-outline text-blue-400 mr-2"></span>
+              fuck billy 
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
