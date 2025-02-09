@@ -54,3 +54,6 @@ export async function onRequest(context) {
     headers: { "Content-Type": "text/plain", ...corsHeaders },
   });
 }
+
+// Add a default export so the module worker has a default export as expected.
+export default onRequest;
