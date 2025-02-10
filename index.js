@@ -50,7 +50,7 @@ export async function onRequest(context) {
   }
 
   // Default response for other paths
-  return new Response("ecomons API Worker", {
+  return new Response("ecomonss API Worker", {
     headers: { "Content-Type": "text/plain", ...corsHeaders },
   });
 }
