@@ -55,5 +55,5 @@ export async function onRequest(context) {
   });
 }
 
-// Add a default export so the module worker has a default export as expected.
+// Default export is required for module Workers.
 export default onRequest;
